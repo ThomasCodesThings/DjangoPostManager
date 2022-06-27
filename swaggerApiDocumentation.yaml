@@ -1,0 +1,189 @@
+swagger: "2.0"
+info:
+  description: "Simple post manager where you can view, create and delete Posts and see posts of users based on their {userId}."
+  title: "Post Manager"
+  version: "1.1.1"
+host: "127.0.0.1"
+basePath: "/"
+tags:
+- name: "posts"
+  description: "Everything about your posts"
+- name: "posts/{postId}"
+  description: "Making changes with Post based on {postId}"
+- name: "posts/user/{userId}"
+  description: "Shows all Posts for user with {userId}"
+schemes:
+- "http"
+paths:
+  /posts:
+    get:
+      tags:
+      - "posts"
+      summary: "Show all existing Posts in table"
+      produces:
+      - ""
+      responses:
+        "200":
+          description: "OK"
+    post:
+      tags:
+      - "posts"
+      summary: "Loads all Posts from external API and stores them into database"
+      produces:
+      - ""
+      responses:
+        "302":
+          description: "Redirected"
+    delete:
+      tags:
+      - "posts"
+      summary: "Clears database"
+      produces:
+      - ""
+      consumes: 
+      - "multipart/form-data"
+      parameters:
+      - name: "_method"
+        in: "formData"
+        description: "'Overrides' form method"
+        required: true
+        type: "string"
+      responses:
+        "302":
+          description: "Redirected"
+  /posts/create:
+    get:
+      tags:
+      - "posts"
+      summary: "Creates form to create new Post"
+      produces:
+      - ""
+      consumes: 
+      - "multipart/form-data"
+      parameters:
+      - name: "userId"
+        in: "formData"
+        description: "uses userId to prefill 'userId' in form"
+        required: true
+        type: "integer"
+      - name: "prevUrl"
+        in: "formData"
+        description: "passed previous url to return"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "OK"
+    post:
+      tags:
+      - "posts"
+      summary: "Saves new Post into database"
+      produces:
+      - ""
+      responses:
+        "302":
+          description: "Redirected"
+  
+  /posts/{postId}:
+    get:
+      tags:
+      - "posts/{postId}"
+      summary: "Shows Post details by ID"
+      produces:
+      - ""
+      parameters:
+      - name: "postId"
+        in: "path"
+        description: "ID of Post to get from database"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+    put:
+      tags:
+      - "posts/{postId}"
+      summary: "Updates Post details by ID"
+      produces:
+      - ""
+      consumes: 
+      - "multipart/form-data"
+      parameters:
+      - name: "postId"
+        in: "path"
+        description: "ID of Post to get from database"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "_method"
+        in: "formData"
+        description: "'Overrides' form method"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "OK"
+    delete:
+      tags:
+      - "posts/{postId}"
+      summary: "Delete Post by ID"
+      produces:
+      - ""
+      consumes: 
+      - "multipart/form-data"
+      parameters:
+      - name: "postId"
+        in: "path"
+        description: "ID of Post to get from database"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "_method"
+        in: "formData"
+        description: "'Overrides' form method"
+        required: true
+        type: "string"
+      - name: "prevUrl"
+        in: "formData"
+        description: "passed previous url to return"
+        required: true
+        type: "string"
+      responses:
+        "302":
+          description: "Redirected"
+      
+  /posts/{postId}/edit:
+    get:
+      tags:
+      - "posts/{postId}"
+      summary: "Prepares editable form with Post details by ID"
+      produces:
+      - ""
+      parameters:
+      - name: "postId"
+        in: "path"
+        description: "ID of Post to get from database"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+  /posts/user/{userId}:
+    get:
+      tags:
+      - "posts/user/{userId}"
+      summary: "Shows all Posts made by user with ID"
+      produces:
+      - ""
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "Used to show posts made by user with userId"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"

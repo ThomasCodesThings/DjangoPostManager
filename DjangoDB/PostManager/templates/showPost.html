@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Showing post with id: {{ id }}</h2>
+{{ form.as_p }}
+<form action="{% url 'edit' id %}" method="GET">
+    {% csrf_token %}
+    <input type="hidden" name="prevUrl" value="{{ prevUrl }}">
+    <button type="submit">Edit</button>
+</form>
+
+<form action="{% url 'show' id %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="prevUrl" value="{{ prevUrl }}">
+    <button type="submit">X</button>
+</form>
+</body>
+</html>
